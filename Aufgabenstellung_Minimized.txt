@@ -1,0 +1,24 @@
+Applikation
+
+Erstelle eine Web-Applikation mit einem eigenen, externen Webservice, welcher in der Applikation eingebunden ist.
+Die Applikation muss eine Grafische Webseite in einer 4-Tier Architektur im MVC Pattern sein.
+Ein Pflichtenheft muss erstellt werden.
+Benutzer müssen verwaltet werden können auf der Webseite selbst, mit sicheren Formularen, welche geprüft werden.
+Nutzerdaten müssen verschlüsselt werden und Sessionhandling muss implementiert werden.
+Die Webseite muss mit neusten OWASP-Tools getestet werden, zusätzlich zu den selbst definierten Test Cases.
+
+
+
+Tools
+
+Angular für Frontend
+NodeJS für Backend und Service
+MongoDB für DB
+
+
+
+Dokumentation
+
+Erstelle eine technische Dokumentation.
+Zusätzlich zum technischen Teil, muss das Vorgehen, die Mockups, die Implementierung und die Tests für die Applikation dokumentiert werden.
+Gegen Ende des Projekts muss die Zusammenarbeit und die gemeinsam geleistete Arbeit reflektiert werden.

@@ -1,0 +1,4 @@
+﻿{
+    "connectionString": "mongodb+srv://MisterMongo:zJYi73b8vAxHZvC@cluster0-wmuty.mongodb.net/Chrysippus?retryWrites=true&w=majority",
+    "secret": "this text is a secret and has to contain special characters like !*ç%&/(ä to be safe"
+}
