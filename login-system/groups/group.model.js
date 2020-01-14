@@ -4,12 +4,12 @@ const Schema = mongoose.Schema;
 /**
  * This object holds the schema of the group object in the database.
  *
- * @property {*} name           This property holds the name of the group.
- * @property {*} owner          This property holds the owner of the group.
- * @property {*} createdDate    This property holds the creation date of the group.
- * @property {*} chat           This property holds the chat history of the group.
- * @property {*} members        This property holds the members of the group.
- * @property {*} favorite       This property holds an array of the users who have favorited the group.
+ * @property { String } name                                            This property holds the name of the group.
+ * @property { String } owner                                           This property holds the owner of the group.
+ * @property { Date } createdDate                                       This property holds the creation date of the group.
+ * @property {[{ username: String, message: String, date: Date }]} chat This property holds the chat history of the group.
+ * @property {[{ id: String }]} members                                 This property holds the members of the group.
+ * @property {[{ id: String }]} favorite                                This property holds an array of the users who have favorited the group.
  */
 const schema = new Schema({
     name: { type: String, unique: true, required: true },

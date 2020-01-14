@@ -20,6 +20,8 @@ module.exports = {
  * 
  * @param { String } id The ID of the chat to be fetched.
  * @returns The chat associated with the ID given.
+ *
+ * @author Joel Meccariello
  */
 async function getById(id) {
     return await Chat.findById(id);
@@ -29,6 +31,8 @@ async function getById(id) {
  * This method fetches all chat objects associated with the given ID.
  * 
  * @param {{ String }} id The ID of the user, who wants an array of his chats.
+ *
+ * @author Joel Meccariello
  */
 async function getAll(id) {
     await Chat.find((err, chats) => {
@@ -45,6 +49,8 @@ async function getAll(id) {
  * 
  * @param { String } id     The ID of the chat, where the user wants to add or remove it from it's favorites.
  * @param { String } userID The ID of the user, who wants to add or remove the chat to or from it's favorites.
+ *
+ * @author Joel Meccariello
  */
 async function toggleFavorite(id, userID) {
     const chat = await Chat.findById(id);
@@ -67,6 +73,8 @@ async function toggleFavorite(id, userID) {
  * 
  * @param { String } id                                 The ID of the chat, where a message has to be added.
  * @param {{ author: String, content: String }} message The message object containing the author and the content of the message.
+ *
+ * @author Joel Meccariello
  */
 async function addMessage(id, message) {
     var chat = await Chat.findById(id);

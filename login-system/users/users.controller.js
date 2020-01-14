@@ -14,31 +14,38 @@ module.exports = router;
 /**
  * A user can register an account, with which he can log in.
  * 
- * @param {*} req Must contain a body object with a simplified user object. 
+ * @param {{ body: { username: String, password: String }}} req Must contain a body object with a simplified user object.
+ * 
+ * @author Joel Meccariello 
  */
 function register(req, res, next) {
     userService.create(req.body)
-        .then(() => res.json({}))
+        .then((user) => res.json(user))
         .catch(err => next(err));
 }
 
 /**
  * A user can authenticate with his username and password.
  * 
- * @param {*} req Must contain a body object with a simplified user object.
+ * @param {{ body: { username: String, password: String } }} req Must contain a body object with a simplified user object.
+ *
+ * @author Joel Meccariello
  */
 function authenticate(req, res, next) {
     userService.authenticate(req.body)
         .then(user => user ? res.json(user) : res.status(400).json({ message: 'Username or password is incorrect' }))
-        .catch(err => next(err));
+        .catch(err => console.error(err));
 }
 
 /**
  * A user can update his password.
  * 
- * @param {*} req Must contain a params object with the user id and a body object with a simplified user object.
+ * @param {{ params: { id: String }, body: { username: String, password: String } }} req Must contain a params object with the user id and a body object with a simplified user object.
+ *
+ * @author Joel Meccariello
  */
 function update(req, res, next) {
+    console.log("test");
     userService.update(req.params.id, req.body)
         .then(() => res.json({}))
         .catch(err => next(err));

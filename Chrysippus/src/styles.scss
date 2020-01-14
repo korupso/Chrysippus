@@ -1,1 +1,99 @@
-/* You can add global styles to this file, and also import other style files */
+body {
+    background-color: rgb(57, 57, 57);
+}
+
+.window {
+    background-color: rgb(44, 44, 44);
+    width: 50vw;
+    height: 50vh;
+    margin-left: 25vw;
+    margin-top: 25vh;
+    box-shadow: 0.52083vw 0.92592vh 3.3333vh rgb(0, 0, 0);
+}
+
+.title {
+    color: rgb(220, 220, 220);
+    font-size: 300%;
+    font-weight: bold;
+}
+
+.window-title {
+    text-align: center;
+    margin: 0;
+}
+
+.chat-name {
+    margin-left: 10vw;
+}
+
+.message {
+    color: rgb(197, 197, 197);
+}
+
+.username {
+    color: rgb(243, 243, 243);
+}
+
+.date {
+    color: rgb(110, 110, 110);
+}
+
+.comment {
+    color: rgb(110, 110, 110);
+}
+
+.slogin-comment {
+    margin-left: 8vw;
+}
+
+a {
+    color: rgb(10, 10, 10);
+    text-decoration: none;
+}
+
+p.slogin {
+    text-align: right;
+    margin-left: auto;
+    margin-right: 2vw;
+    margin-top: -7vh;
+}
+
+input {
+    color: rgb(197, 197, 197);
+    background-color: rgb(44, 44, 44);
+    border: none;
+    border-radius: 0.18518518518518517vw;
+    border-bottom: 0.18518518518518517vw solid rgb(220, 220, 220);
+    font-size: 150%;
+    margin-left: 5vw;
+    margin-bottom: 3vh;
+    width: 40vw;
+    padding-top: 1vw;
+    padding-bottom: 1vw;
+    padding-left: 1vh;
+    padding-right: 1vh;
+}
+
+input:focus.slogin {
+  background-color: rgb(57, 57, 57);
+}
+
+.button {
+  padding: 16px 32px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 110%;
+  -webkit-transition-duration: 0.4s;
+  transition-duration: 0.4s;
+  cursor: pointer;
+  background-color: rgb(44, 44, 44); 
+  color: rgb(220, 220, 220); 
+  border: 2px solid rgb(57, 57, 57);
+  width: 10vw;
+  margin-left: 20vw;
+}
+
+.button:hover {
+  background-color: rgb(57, 57, 57);
+}

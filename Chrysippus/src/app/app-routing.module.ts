@@ -7,13 +7,13 @@ import { GroupComponent } from './group/group.component';
 import { GroupinfoComponent } from './groupinfo/groupinfo.component';
 import { LoginComponent } from './login/login.component';
 import { SignupComponent } from './signup/signup.component';
-import { PasswordChangeComponent } from './password-change/password-change.component';
+import { PasswordResetComponent } from './password-reset/password-reset.component';
 
 const routes: Routes = [
   { path: "", redirectTo: "login", pathMatch: "full" },
   { path: "login", component: LoginComponent },
   { path: "signup", component: SignupComponent },
-  { path: "password-reset", component: PasswordChangeComponent },
+  { path: "password-reset", component: PasswordResetComponent },
   { path: "chats", component: ChatsComponent },
   { path: "groups", component: GroupsComponent },
   { path: "chat", component: ChatComponent },

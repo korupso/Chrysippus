@@ -17,7 +17,9 @@ module.exports = {
 /**
  * This method adds a new user to the database.
  * 
- * @param {*} userParam A simplified user object. Must contain a username and a password.
+ * @param {{ username: String, password: String }} userParam A simplified user object. Must contain a username and a password.
+ *
+ * @author Joel Meccariello
  */
 async function create(userParam) {
     if (await User.findOne({ username: userParam.username })) throw 'Username "' + userParam.username + '" is already taken';
@@ -27,16 +29,25 @@ async function create(userParam) {
     if (userParam.password) user.hash = bcrypt.hashSync(userParam.password, 10);
 
     await user.save();
+
+    const { hash, ...userWithoutHash } = user.toObject();
+    const token = jwt.sign({ sub: user.id }, config.secret);
+    return {
+        ...userWithoutHash,
+        token
+    };
 }
 
 /**
  * This method checks whether a user exists with the given username and password and returns a JWT if the check completes successfully.
  * 
- * @param {} userParam A simplified user object. Must contain a username and a password.
+ * @param {{ username: String, password: String }} userParam A simplified user object. Must contain a username and a password.
+ *
+ * @author Joel Meccariello
  */
 async function authenticate(userParam) {
-    const user = await User.findOne(userParam.username);
-    if (user && bcrypt.compareSync(password, user.hash)) {
+    const user = await User.findOne({ username: userParam.username });
+    if (user && bcrypt.compareSync(userParam.password, user.hash)) {
         const { hash, ...userWithoutHash } = user.toObject();
         const token = jwt.sign({ sub: user.id }, config.secret);
         return {
@@ -50,6 +61,8 @@ async function authenticate(userParam) {
  * This method returns the user object bound to the given ID.
  * 
  * @param {*} id The ID of a user object.
+ *
+ * @author Joel Meccariello
  */
 async function getById(id) {
     return await User.findById(id).select('-hash');
@@ -60,6 +73,8 @@ async function getById(id) {
  * 
  * @param {*} id The id of a user in the database. The one who may be updated with this method.
  * @param {*} userParam The new simplified user object, containing the new password.
+ *
+ * @author Joel Meccariello
  */
 async function update(id, userParam) {
     const user = await User.findById(id);

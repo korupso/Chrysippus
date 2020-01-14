@@ -1,1 +1,21 @@
-<p>login works!</p>
+<div class="window">
+    <p class="title window-title">
+        Login
+    </p>
+    <p class="comment slogin">
+        Need an account? <a routerLink="/signup">Register</a>
+    </p>
+    <br>
+    <span class="comment slogin-comment">
+        Please enter your username
+    </span>
+    <br>
+    <input type="text" name="username" class="slogin" [(ngModel)]="username" />
+    <br>
+    <span class="comment slogin-comment">
+        Please enter your password
+    </span>
+    <input type="password" name="password" class="slogin" [(ngModel)]="password" />
+    <br>
+    <button type="submit" class="button" (click)="authenticate()">Login</button>
+</div>

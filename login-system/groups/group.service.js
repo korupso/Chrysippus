@@ -22,7 +22,9 @@ module.exports = {
 /**
  * This method allows a user to create a new group.
  * 
- * @param {{ name: String, owner: String }} groupParam Must contain a body object with the group name, the owner's ID and the
+ * @param {{ name: String, owner: String }} groupParam Must contain a body object with the group name and the owner's ID.
+ *
+ * @author Joel Meccariello
  */
 async function create(groupParam) {
 
@@ -41,6 +43,8 @@ async function create(groupParam) {
  * @param { String } id Must contain a params object with the ID of the group to be returned.
  * 
  * @returns The group object found with the ID given.
+ *
+ * @author Joel Meccariello
  */
 async function getById(id) {
     return await Group.findById(id);
@@ -50,6 +54,8 @@ async function getById(id) {
  * This method fetches all group objects from the database.
  * 
  * @returns An array containing all group objects.
+ *
+ * @author Joel Meccariello
  */
 async function getAll() {
     await Group.find((err, groups) => {
@@ -63,6 +69,8 @@ async function getAll() {
  * @param { String } id The ID of the given user.
  * 
  * @returns An array containing all group objects, which are favorited by the user given.
+ *
+ * @author Joel Meccariello
  */
 async function getFavorites(id) {
     await Group.find((err, groups) => {
@@ -75,6 +83,8 @@ async function getFavorites(id) {
  * 
  * @param { String } id       The ID of the group, where the user has to be added.
  * @param { String } userID   The ID of the user to be added.
+ *
+ * @author Joel Meccariello
  */
 async function addUser(id, userID) {
     const group = await Group.findById(id);
@@ -93,6 +103,8 @@ async function addUser(id, userID) {
  * 
  * @param { String } id       The ID of the group, where the user has to be removed.
  * @param { String } userID   The ID of the user, who has to be removed from the given group.
+ *
+ * @author Joel Meccariello
  */
 async function removeUser(id, userID) {
     const group = await Group.findById(id);
@@ -110,6 +122,8 @@ async function removeUser(id, userID) {
  * 
  * @param { String } id                                   The ID of the group, where the message has to be added.
  * @param {{ author: String, content: String }} message   The message object containing the content and the author of the message.
+ *
+ * @author Joel Meccariello
  */
 async function addMessage(id, message) {
     var group = await Group.findById(id);
@@ -124,6 +138,8 @@ async function addMessage(id, message) {
  * 
  * @param { String } id     The ID of the group to be deleted.
  * @param { String } owner  The ID of the owner of the group.
+ *
+ * @author Joel Meccariello
  */
 async function remove(id, owner) {
     const group = await Group.findById(id);

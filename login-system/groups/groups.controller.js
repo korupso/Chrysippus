@@ -4,6 +4,8 @@ const groupService = require('./group.service');
 
 /**
  * The following few lines contain all the accepted methods, paths and method references of the router.
+ * 
+ * @author Joel Meccariello
  */
 router.post('/create', create);
 router.get('/:id', getById);
@@ -17,7 +19,9 @@ module.exports = router;
 /**
  * This method creates a new group based on name and creator.
  * 
- * @param {{ body: { name: String, owner: String } }} req Must contain a body object with the group name, the owner's ID and the
+ * @param {{ body: { name: String, owner: String } }} req Must contain a body object with the group name and the owner's ID.
+ *
+ * @author Joel Meccariello
  */
 function create(req, res, next) {
     req.body.members = [];
@@ -31,6 +35,8 @@ function create(req, res, next) {
  * This method returns a group object based on the given ID.
  * 
  * @param { params: { id: String } } req Must contain a params object with the ID of the group to be returned.
+ *
+ * @author Joel Meccariello
  */
 function getById(req, res, next) {
     groupService.getById(req.params.id)
