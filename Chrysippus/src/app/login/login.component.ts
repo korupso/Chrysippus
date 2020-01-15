@@ -50,7 +50,6 @@ export class LoginComponent implements OnInit {
       (res) => {
         if ((res as any).token) {
           this.user.id = (res as any)._id;
-
           this.router.navigate(["/password-reset"]);
         }
       },

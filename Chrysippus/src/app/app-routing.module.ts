@@ -9,6 +9,11 @@ import { LoginComponent } from './login/login.component';
 import { SignupComponent } from './signup/signup.component';
 import { PasswordResetComponent } from './password-reset/password-reset.component';
 
+/**
+ * This variable stores all the routing information of the application. None of the pages would be accessible without it.
+ * 
+ * @author Joel Meccariello
+ */
 const routes: Routes = [
   { path: "", redirectTo: "login", pathMatch: "full" },
   { path: "login", component: LoginComponent },
@@ -21,6 +26,11 @@ const routes: Routes = [
   { path: "groupinfo", component: GroupinfoComponent },
 ];
 
+/**
+ * This class does nothing, but the decorator manages the importation and exportation of the router module.
+ * 
+ * @author Joel Meccariello
+ */
 @NgModule({
   imports: [RouterModule.forRoot(routes)],
   exports: [RouterModule]
