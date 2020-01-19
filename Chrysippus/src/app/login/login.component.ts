@@ -49,9 +49,9 @@ export class LoginComponent implements OnInit {
     this.http.post("http://localhost:3000/users/authenticate", { username: this.username, password: this.password }).subscribe(
       (res) => {
         if ((res as any).token) {
-          this.user.id = (res as any)._id;
-          this.router.navigate(["/password-reset"]);
-        }
+          this.user.setUserInfo(res as any);
+          this.router.navigate(["/chats"]);
+        } else console.log(res);
       },
       (err) => {
         console.log(err);

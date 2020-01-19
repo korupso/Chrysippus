@@ -11,7 +11,9 @@ module.exports = {
     create,
     authenticate,
     getById,
-    update
+    update,
+    addContact,
+    removeContact
 };
 
 /**
@@ -60,7 +62,7 @@ async function authenticate(userParam) {
 /**
  * This method returns the user object bound to the given ID.
  * 
- * @param {*} id The ID of a user object.
+ * @param { String } id The ID of a user object.
  *
  * @author Joel Meccariello
  */
@@ -71,20 +73,57 @@ async function getById(id) {
 /**
  * This method checks whether only the password of the given simplified user object and the simplified user object of the database is different and updates it to a new value.
  * 
- * @param {*} id The id of a user in the database. The one who may be updated with this method.
- * @param {*} userParam The new simplified user object, containing the new password.
+ * @param { String } id The id of a user in the database. The one who may be updated with this method.
+ * @param { String } password The new password.
  *
  * @author Joel Meccariello
  */
-async function update(id, userParam) {
+async function update(id, password) {
     const user = await User.findById(id);
 
     if (!user) throw 'User not found';
-    if (user.username !== userParam.username && await User.findOne({ username: userParam.username })) throw 'Username "' + userParam.username + '" is already taken';
+    if (!password) throw "No new password was given";
 
-    if (userParam.password) userParam.hash = bcrypt.hashSync(userParam.password, 10);
+    user.hash = bcrypt.hashSync(password, 10);
 
-    Object.assign(user, userParam);
+    await user.save();
+}
+
+/**
+ * This method allows the user to add another user to his contacts.
+ * 
+ * @param { String } id         The ID of the current user, adding the contact to his contact list.
+ * @param { String } contactId  The ID of the user to be added to the current user's contacts.
+ * 
+ * @author Joel Meccariello
+ */
+async function addContact(id, contactId) {
+    const user = await User.findById(id);
+    const contact = await User.findById(contactId);
+
+    if (!user) throw "Something went wrong";
+    if (!contact) throw "This user doesn't exist";
+    for (var i = 0; i < user.contacts.length; i++) if (contactId === user.contacts[i]) throw "User is already in your contact list";
+
+    user.contacts.push(contactId);
+
+    await user.save();
+}
+
+async function removeContact(id, contactId) {
+    const user = await User.findById(id);
+    const contact = await User.findById(contactId);
+
+    if (!user) throw "Something is wrong";
+    if (!contact) throw "This user doesn't exist";
+
+    var isInContacts = false;
+    for (var i = 0; i < user.contacts.length; i++) if (user.contacts[i]._id == contactId) isInContacts = true;
+    if (!isInContacts) throw "This user is not in your contact list";
+
+    user.contacts.forEach((contact, index) => {
+        if (contact._id == contactId) user.contacts.splice(index, 1);
+    });
 
     await user.save();
 }

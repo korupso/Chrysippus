@@ -1,9 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { Router } from '@angular/router';
-
 import { VariablesService } from '../services/variables/variables.service';
 import { UserService } from '../services/user/user.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-password-reset',
@@ -13,23 +12,20 @@ import { UserService } from '../services/user/user.service';
 export class PasswordResetComponent implements OnInit {
 
   password: String;
-  passwordAgain: String;
+  cpassword: String;
 
-  constructor(private http: HttpClient, private router: Router, private variables: VariablesService, private user: UserService) { }
+  constructor(private http: HttpClient, private variables: VariablesService, private user: UserService, private router: Router) { }
 
   ngOnInit() {
   }
 
-  passwordReset() {
-    if (this.password === this.passwordAgain) {
-      this.http.put(this.variables.urlBackend + "/" + this.user.id, { username: this.user.username, password: this.password }).subscribe(
-        (res) => {
-          console.log(res);
-        },
-        (err) => {
-          console.log(err);
+  resetPassword() {
+    if (this.password === this.cpassword) {
+      this.http.put(this.variables.urlBackend + "/users/" + this.user.id, { password: this.password }).subscribe(
+        res => {
+          this.router.navigate(["/dashboard"]);
         }
-      );
+      )
     }
   }
 

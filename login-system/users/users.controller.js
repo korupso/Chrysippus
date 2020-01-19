@@ -8,6 +8,8 @@ const userService = require('./user.service');
 router.post('/register', register);
 router.post('/authenticate', authenticate);
 router.put('/:id', update);
+router.put('/:id/contacts', addContact);
+router.put('/:id/contacts/remove', removeContact);
 
 module.exports = router;
 
@@ -40,13 +42,31 @@ function authenticate(req, res, next) {
 /**
  * A user can update his password.
  * 
- * @param {{ params: { id: String }, body: { username: String, password: String } }} req Must contain a params object with the user id and a body object with a simplified user object.
+ * @param {{ params: { id: String }, body: { password: String } }} req Must contain a params object with the user id and a body object with the new password.
  *
  * @author Joel Meccariello
  */
 function update(req, res, next) {
-    console.log("test");
-    userService.update(req.params.id, req.body)
+    userService.update(req.params.id, req.body.password)
+        .then(() => res.json({}))
+        .catch(err => next(err));
+}
+
+/**
+ * A user can add another user to his contacts.
+ * 
+ * @param {{ params: { id: String }, body: { id: String } }} req Must contain a params object with the ID of the current user and a body object with the ID of the user to be added to the current user's contact list.
+ * 
+ * @author Joel Meccariello
+ */
+function addContact(req, res, next) {
+    userService.addContact(req.params.id, req.body.id)
+        .then(() => res.json({}))
+        .catch(err => next(err));
+}
+
+function removeContact(req, res, next) {
+    userService.removeContact(req.params.id, req.body.id)
         .then(() => res.json({}))
         .catch(err => next(err));
 }

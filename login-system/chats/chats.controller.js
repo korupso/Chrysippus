@@ -6,7 +6,7 @@ const chatService = require('./chat.service');
  * The following few lines contain all the accepted methods, paths and method references of the router.
  */
 router.get('/:id', getById);
-router.get('', getAll);
+router.get('/:id/all', getAll);
 router.put('/:id', toggleFavorite);
 router.put('/:id/chat', addMessage);
 
@@ -28,12 +28,12 @@ function getById(req, res, next) {
 /**
  * The program has to use this method to fetch all chats the user is a part of.
  * 
- * @param {{ body: { id: String } }} req Must contain a body object with the ID of the current user.
+ * @param {{ params: { id: String } }} req Must contain a body object with the ID of the current user.
  *
  * @author Joel Meccariello
  */
 function getAll(req, res, next) {
-    chatService.getAll(req.body.id)
+    chatService.getAll(req.params.id)
         .then((chats) => res.json(chats))
         .catch(err => next(err));
 }

@@ -30,18 +30,19 @@ async function getById(id) {
 /**
  * This method fetches all chat objects associated with the given ID.
  * 
- * @param {{ String }} id The ID of the user, who wants an array of his chats.
+ * @param { String } id The ID of the user, who wants an array of his chats.
  *
  * @author Joel Meccariello
  */
 async function getAll(id) {
-    await Chat.find((err, chats) => {
+    await Chat.find({}, (err, chats) => {
         var resChats = [];
 
         for (var i = 0; i < chats.length; i++) if (chats[i].members.includes()) resChats.push(chats[i]);
 
         return resChats;
     });
+    return [];
 }
 
 /**

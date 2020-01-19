@@ -1,0 +1,6 @@
+<span *ngFor="let chat of chats">
+    <div (click)="goToChat(chat)" class="chat-element">
+        {{ chat.contact }}
+    </div>
+    <br>
+</span>

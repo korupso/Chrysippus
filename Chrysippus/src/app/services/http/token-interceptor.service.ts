@@ -1,7 +1,8 @@
 import { Injectable } from '@angular/core';
-import { HttpInterceptor, HttpRequest, HttpHandler, HttpEvent, HttpClient } from '@angular/common/http';
+import { HttpInterceptor, HttpRequest, HttpHandler, HttpEvent, HttpClient, HttpResponse } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { UserService } from '../user/user.service';
+import { tap } from "rxjs/operators";
 
 /**
  * This class is a singleton and is used as an interceptor. It's goal is to intercept each http request and add the user's JWT.
@@ -25,14 +26,8 @@ export class TokenInterceptorService implements HttpInterceptor {
    */
   intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
     const token = this.user.jwt;
-    let newHeaders = req.headers;
-    if (token) {
-      newHeaders = req.headers.append('authtoken', token);
-    } else {
-      newHeaders = req.headers.append('test', 'hallo');
-    }
-    console.log(newHeaders);
-    return next.handle(req.clone({ headers: newHeaders }));
+    if (token) return next.handle(req.clone({ headers: req.headers.append("Authorization", "Bearer " + token) }));
+    else return next.handle(req);
   }
 
   /**

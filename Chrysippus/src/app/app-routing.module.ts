@@ -8,6 +8,8 @@ import { GroupinfoComponent } from './groupinfo/groupinfo.component';
 import { LoginComponent } from './login/login.component';
 import { SignupComponent } from './signup/signup.component';
 import { PasswordResetComponent } from './password-reset/password-reset.component';
+import { SecurityGuard } from './guards/security.guard';
+import { LogoutComponent } from './logout/logout.component';
 
 /**
  * This variable stores all the routing information of the application. None of the pages would be accessible without it.
@@ -18,12 +20,13 @@ const routes: Routes = [
   { path: "", redirectTo: "login", pathMatch: "full" },
   { path: "login", component: LoginComponent },
   { path: "signup", component: SignupComponent },
-  { path: "password-reset", component: PasswordResetComponent },
-  { path: "chats", component: ChatsComponent },
-  { path: "groups", component: GroupsComponent },
-  { path: "chat", component: ChatComponent },
-  { path: "group", component: GroupComponent },
-  { path: "groupinfo", component: GroupinfoComponent },
+  { path: "logout", component: LogoutComponent },
+  { path: "password-reset", component: PasswordResetComponent, canActivate: [SecurityGuard] },
+  { path: "chats", component: ChatsComponent, canActivate: [SecurityGuard] },
+  { path: "groups", component: GroupsComponent, canActivate: [SecurityGuard] },
+  { path: "chat", component: ChatComponent, canActivate: [SecurityGuard] },
+  { path: "group", component: GroupComponent, canActivate: [SecurityGuard] },
+  { path: "group/info", component: GroupinfoComponent, canActivate: [SecurityGuard] },
 ];
 
 /**

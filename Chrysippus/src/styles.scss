@@ -89,11 +89,59 @@ input:focus.slogin {
   cursor: pointer;
   background-color: rgb(44, 44, 44); 
   color: rgb(220, 220, 220); 
-  border: 2px solid rgb(57, 57, 57);
+  border-right: 0.10416vw solid rgb(57, 57, 57);
+  border-left: 0.10416vw solid rgb(57, 57, 57);
+  border-top: 0.18518vh solid rgb(57, 57, 57);
+  border-bottom: 0.18518vh solid rgb(57, 57, 57);
   width: 10vw;
   margin-left: 20vw;
 }
 
 .button:hover {
   background-color: rgb(57, 57, 57);
+}
+
+.warning {
+    color: rgb(150, 0, 0);
+    margin-top: -41vh;
+    text-align: center;
+    position: absolute;
+    width: 98%;
+}
+
+.main {
+    position: absolute;
+    margin-top: -93vh;
+    margin-left: 18vw;
+}
+
+.navbar {
+    color: rgb(220, 220, 220);
+    width: 15vw;
+    height: 93vh;
+    border-right: 0.10416vw solid rgb(220, 220, 220);
+}
+
+.navbar-list {
+    margin-left: 3vw;
+    font-size: 110%;
+    font-weight: bolder;
+    list-style-type: none;
+}
+
+.navbar-title {
+    font-size: 150%;
+}
+
+.separators {
+    border-color: rgb(220, 220, 220);
+}
+
+.navbar-element {
+    cursor: pointer;
+    margin-left: -2vw;
+}
+
+.chat-element {
+    
 }

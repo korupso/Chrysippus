@@ -16,6 +16,8 @@ import { PasswordResetComponent } from './password-reset/password-reset.componen
 import { VariablesService } from './services/variables/variables.service';
 import { UserService } from './services/user/user.service';
 import { TokenInterceptorService } from './services/http/token-interceptor.service';
+import { LogoutComponent } from './logout/logout.component';
+import { SecurityGuard } from './guards/security.guard';
 
 /**
  * This class is empty, but the decorator manages all the declarations, imports, providers and the bootstrap.
@@ -32,7 +34,8 @@ import { TokenInterceptorService } from './services/http/token-interceptor.servi
     GroupinfoComponent,
     LoginComponent,
     SignupComponent,
-    PasswordResetComponent
+    PasswordResetComponent,
+    LogoutComponent
   ],
   imports: [
     BrowserModule,
@@ -47,7 +50,8 @@ import { TokenInterceptorService } from './services/http/token-interceptor.servi
       provide: HTTP_INTERCEPTORS,
       useClass: TokenInterceptorService,
       multi: true
-    }
+    },
+    SecurityGuard
   ],
   bootstrap: [AppComponent]
 })
