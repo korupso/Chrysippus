@@ -65,6 +65,13 @@ function addContact(req, res, next) {
         .catch(err => next(err));
 }
 
+/**
+ * A user can remove one of his contacts from his contact list.
+ * 
+ * @param {{ params: { id: String }, body: { id: String } }} req Must contain a params object with the current user's ID and a body object with the ID of the contact that has to be removed from the current user's contact list.
+ * 
+ * @author Joel Meccariello
+ */
 function removeContact(req, res, next) {
     userService.removeContact(req.params.id, req.body.id)
         .then(() => res.json({}))

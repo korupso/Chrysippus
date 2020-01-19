@@ -110,6 +110,14 @@ async function addContact(id, contactId) {
     await user.save();
 }
 
+/**
+ * This method allows the user to remove a contact from his contact list.
+ * 
+ * @param { String } id         The ID of the user who wants to remove a contact from his contact list.
+ * @param { String } contactId  The ID of the contact to be removed from the user's contact list.
+ * 
+ * @author Joel Meccariello
+ */
 async function removeContact(id, contactId) {
     const user = await User.findById(id);
     const contact = await User.findById(contactId);
