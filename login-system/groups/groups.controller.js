@@ -112,7 +112,7 @@ function toggleFavorite(req, res, next) {
  */
 function removeUser(req, res, next) {
     groupService.removeUser(req.params.id, req.body.id)
-        .then(() => res.json({}))
+        .then(members => res.json(members))
         .catch(err => next(err));
 }
 

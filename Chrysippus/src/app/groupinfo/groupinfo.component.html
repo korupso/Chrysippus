@@ -8,18 +8,22 @@
         </p>
     </div>
     <br>
-    <p class="comment" *ngIf="chat.members.length > 1">
-        Members
-    </p>
-    <p class="comment" *ngIf="chat.members.length === 1">
-        Member
-    </p>
+    <span *ngIf="chat">
+        <span *ngIf="chat.members">
+            <p class="comment" *ngIf="chat.members.length > 1">
+                Members
+            </p>
+            <p class="comment" *ngIf="chat.members.length === 1">
+                Member
+            </p>
+        </span>
+    </span>
     <span *ngFor="let member of chat.members">
         <div class="chat-element">
             <p class="chat-info">
                 {{ member.username }}
             </p>
-            <p class="chat-info chat-date" *ngIf="username === chat.owner" (click)="removeUser(member.id)">
+            <p class="chat-info chat-date clickable" *ngIf="username === chat.owner" (click)="removeUser(member)">
                 Delete
             </p>
         </div>

@@ -22,7 +22,7 @@ export class GroupComponent implements OnInit {
     this.username = this.user.username;
     this.http.get(this.variables.urlBackend + "/groups/" + this.chat.id + "/messages").subscribe(
       res => {
-        this.chat.chat = (res as any);
+        this.chat.chat = res as any;
       }
     );
   }

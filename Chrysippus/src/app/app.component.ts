@@ -25,7 +25,8 @@ export class AppComponent {
   hasNavbar: Boolean;
   navbarBlacklist: string[] = [
     "login",
-    "logout"
+    "logout",
+    "signup"
   ];
   currentNavbarElement: { name: string, link: string, sublinks?: string[] } = { name: "Login", link: "/login" };
   chatName: string;
@@ -123,15 +124,15 @@ export class AppComponent {
    * @author Joel Meccariello
    */
   getNavbarTitle(val: any): string {
-    return val.routerEvent ? (val.routerEvent.url.split("/").length === 3 ? val.routerEvent.url.split("/")[2] : this.navbarTitle) : this.currentNavbarElement.name;
+    return val.routerEvent ? (val.routerEvent.url.split("/").length === 3 || val.routerEvent.url.split("/").length === 4 ? val.routerEvent.url.split("/")[2] : this.navbarTitle) : this.currentNavbarElement.name;
   }
 
   checkIfNavbarIsClickable(val: any) {
-    if (val.routerEvent) if (val.routerEvent.url.split("/").length === 3) return val.routerEvent.url.split("/")[1] === "group";
+    if (val.routerEvent) if (val.routerEvent.url.split("/").length === 3 || val.routerEvent.url.split("/").length === 4) return val.routerEvent.url.split("/")[1] === "group";
   }
 
   getNavbarLink(val: any): string {
-    if (val.routerEvent) if (val.routerEvent.url.split("/").length === 3) if (val.routerEvent.url.split("/")[1] === "group") return "/group/" + this.navbarTitle + "/info";
+    if (val.routerEvent) if (val.routerEvent.url.split("/").length === 3 || val.routerEvent.url.split("/").length === 4) if (val.routerEvent.url.split("/")[1] === "group") return "/group/" + this.navbarTitle + "/info";
   }
 
 }

@@ -16,9 +16,12 @@ export class GroupsComponent implements OnInit {
   favGroups = [];
   groupsImIn = [];
 
+  newGroup: string;
+
   constructor(private router: Router, private http: HttpClient, private variables: VariablesService, private user: UserService, private chatService: CurrentChatService) { }
 
   ngOnInit() {
+    this.newGroup = "";
     this.getAllGroups();
   }
 
@@ -35,6 +38,12 @@ export class GroupsComponent implements OnInit {
   goToChat(chat: any) {
     this.chatService.currentChat = chat;
     this.router.navigate(["/group/" + chat.name]);
+  }
+
+  createGroup() {
+    if (this.newGroup) this.http.post(this.variables.urlBackend + "/groups/", { name: this.newGroup, owner: this.user.id }).subscribe(
+      res => this.ngOnInit()
+    );
   }
 
 }

@@ -1,3 +1,10 @@
+<p class="comment">
+    Create New Group
+</p>
+<div class="creationist">
+    <textarea [(ngModel)]="newGroup" placeholder="Enter a group name" class="message-box"></textarea>
+    <a (click)="createGroup()" class="send">Create</a>
+</div>
 <p *ngIf="myGroups.length > 0" class="comment">
     My Groups ({{ myGroups.length }})
 </p>
@@ -8,11 +15,11 @@
         </p>
         <p class="chat-info chat-date">
             <span *ngIf="chat.chat.length > 0; else emptyChat">
-                {{ chat.chat[chat.chat.length - 1].date | date: 'dd.MM.yyyy':'+0100' }}
+                {{ chat.chat[chat.chat.length - 1].date | date: 'dd.MM.yyyy HH:mm:ss':'+0100' }}
             </span>
             <ng-template #emptyChat>
                 <span class="chat-creation">
-                    {{ chat.createdDate | date: 'dd.MM.yyyy':'+0100' }}
+                    {{ chat.createdDate | date: 'dd.MM.yyyy HH:mm:ss':'+0100' }}
                 </span>
             </ng-template>
         </p>
@@ -29,11 +36,11 @@
         </p>
         <p class="chat-info chat-date">
             <span *ngIf="chat.chat.length > 0; else emptyChat">
-                {{ chat.chat[chat.chat.length - 1].date | date: 'dd.MM.yyyy':'+0100' }}
+                {{ chat.chat[chat.chat.length - 1].date | date: 'dd.MM.yyyy HH:mm:ss':'+0100' }}
             </span>
             <ng-template #emptyChat>
                 <span class="chat-creation">
-                    {{ chat.createdDate | date: 'dd.MM.yyyy':'+0100' }}
+                    {{ chat.createdDate | date: 'dd.MM.yyyy HH:mm:ss':'+0100' }}
                 </span>
             </ng-template>
         </p>
@@ -50,11 +57,11 @@
         </p>
         <p class="chat-info chat-date">
             <span *ngIf="chat.chat.length > 0; else emptyChat">
-                {{ chat.chat[chat.chat.length - 1].date | date: 'dd.MM.yyyy':'+0100' }}
+                {{ chat.chat[chat.chat.length - 1].date | date: 'dd.MM.yyyy HH:mm:ss':'+0100' }}
             </span>
             <ng-template #emptyChat>
                 <span class="chat-creation">
-                    {{ chat.createdDate | date: 'dd.MM.yyyy':'+0100' }}
+                    {{ chat.createdDate | date: 'dd.MM.yyyy HH:mm:ss':'+0100' }}
                 </span>
             </ng-template>
         </p>

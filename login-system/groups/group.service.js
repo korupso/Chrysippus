@@ -51,17 +51,15 @@ async function create(groupParam) {
  */
 async function getById(id) {
     var chat = await Group.findById(id);
-    var owner = await User.findById(chat.owner);
+    var owner = (await User.findById(chat.owner)).username;
 
-    chat.owner = owner.username;
+    console.log(owner);
+
+    chat.owner = owner;
 
     var members = [];
-    for (var i = 0; i < chat.members.length; i++) {
-        var member = await User.findById(chat.members[i]._id);
-        members.push({ id: chat.members[i]._id, username: member.username });
-    }
+    if (chat.members) for (var i = 0; i < chat.members.length; i++) if (chat.members[i]) members.push({ id: chat.members[i]._id, username: (await User.findById(chat.members[i]._id)).username });
 
-    console.log(chat);
     return { id: chat.id, name: chat.name, owner: chat.owner, createdDate: chat.createdDate, members: members };
 }
 
@@ -85,7 +83,7 @@ async function getAll(id) {
 
     for (var group of allGroups) if (group.owner === id) myGroups.push(group);
     for (var group of allGroups) if (!myGroups.includes(group)) for (var favorite of group.favorite) if (favorite._id == id) favGroups.push(group);
-    for (var group of allGroups) if (!myGroups.includes(group) && !favGroups.includes(group)) for (var member of group.members) if (member._id == id) groupsImIn.push(group);
+    for (var group of allGroups) if (!myGroups.includes(group) && !favGroups.includes(group)) for (var member of group.members) if (member) if (member._id == id) groupsImIn.push(group);
 
     return {
         myGroups: myGroups,
@@ -96,25 +94,11 @@ async function getAll(id) {
 
 async function getMessages(id) {
     const chat = await Group.findById(id);
-    var userMap = [];
     var chatHistory = [];
 
     if (!chat) throw "Group not found";
 
-    for (var message of chat.chat) {
-        var foundUser = false;
-        for (var user of userMap) {
-            if (message.author === user.id) {
-                foundUser = true;
-                chatHistory.push({ author: user.username, message: message.message, date: message.date });
-            }
-        }
-        if (!foundUser) {
-            var user = (await User.findById(message.author));
-            userMap.push({ username: user.username, id: user.id });
-            chatHistory.push({ author: user.username, message: message.message, date: message.date });
-        }
-    }
+    for (var message of chat.chat) chatHistory.push({ author: (await User.findById(message.author)).username, message: message.message, date: message.date });
 
     console.log(chatHistory);
 
@@ -130,15 +114,16 @@ async function getMessages(id) {
  * @author Joel Meccariello
  */
 async function addUser(id, username) {
+    console.log(username);
     const group = await Group.findById(id);
-    const user = await User.find({ username: username });
+    const user = await User.findOne({ username: username });
 
     console.log("test: " + user);
 
     if (!group) throw "Group not found";
     if (!user) throw "User not found";
     if (group.owner === user.id) throw "You are already the owner of the group";
-    if (group.members.includes(user.id)) throw "User is already in group";
+    for (var member of group.members) if (member._id == user.id) throw "User is already in group";
 
     group.members.push(user.id);
 
@@ -202,11 +187,13 @@ async function removeUser(id, userID) {
 
     if (!group) throw "Group not found";
     if (group.owner === userID) throw "The owner can't be removed from their group";
-    if (!group.members.includes(userID)) throw "The specified user is not in the group";
+    for (var member of group.members) if (member._id === userID) throw "The specified user is not in the group";
 
-    for (var i = 0; i < group.members.length; i++) if (group.members[i] === userID) group.members = group.members.splice(i, 1);
+    for (var i = 0; i < group.members.length; i++) if (group.members[i]._id == userID) group.members.splice(i, 1);
 
     await group.save();
+
+    return group.members;
 }
 
 /**

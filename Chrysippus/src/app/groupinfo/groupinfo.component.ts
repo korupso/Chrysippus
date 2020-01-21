@@ -19,22 +19,22 @@ export class GroupinfoComponent implements OnInit {
   constructor(private chatService: CurrentChatService, private http: HttpClient, private variables: VariablesService, private user: UserService) { }
 
   ngOnInit() {
+    this.newUser = "";
     this.id = this.user.id;
     this.username = this.user.username;
     this.http.get(this.variables.urlBackend + "/groups/" + this.chatService.currentChat.id).subscribe(
       res => {
-        console.log(res);
         this.chat = res as any;
       }
     );
   }
 
   addUser() {
-    this.http.put(this.variables.urlBackend + "/groups/" + this.chat.id + "/members", { username: this.newUser });
+    this.http.put(this.variables.urlBackend + "/groups/" + this.chat.id + "/members", { username: this.newUser }).subscribe(res => this.ngOnInit());
   }
 
-  removeUser(id: string) {
-    this.http.put(this.variables.urlBackend + "/groups/" + this.chat.id + "/members/remove", { id: id });
+  removeUser(member) {
+    this.http.put(this.variables.urlBackend + "/groups/" + this.chat.id + "/members/remove", { id: member.id }).subscribe(res => this.ngOnInit());
   }
 
 }

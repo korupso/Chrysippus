@@ -1,0 +1,23 @@
+.message-box{
+	resize:none;
+	border:none;
+	display:block;
+	width:63vw;
+	height:5vh;
+    border-radius:10px;
+    background-color: rgb(70, 70, 70);
+	font-size:13px;
+}
+.message-box::placeholder{
+	color:#ddd;
+}
+.send{
+	text-decoration:none;
+	text-transform:uppercase;
+	font-weight:bold;
+	vertical-align:center;
+	display:inline-block;
+}
+.textBox{
+    display: flex;
+}
