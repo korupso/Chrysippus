@@ -1,1 +1,52 @@
-<p>chat works!</p>
+<ul id="chat">
+    <span *ngFor="let message of chat.chat; let i = index">
+        <li *ngIf="message.author !== username; else me" class="you">
+            <span *ngIf="chat.chat[i - 1]; else normalTriangle">
+                <span *ngIf="chat.chat[i - 1].author !== message.author">
+                    <div class="entete">
+                        <h2>{{ message.author }}</h2>
+                        <h3>{{ message.date | date: 'dd.MM.yy HH:mm:ss':'+0100' }}</h3>
+                    </div>
+                    <div class="triangle"></div>
+                </span>
+            </span>
+            <ng-template #normalTriangle>
+                <div class="entete">
+                    <h2>{{ message.author }}</h2>
+                    <h3>{{ message.date | date: 'dd.MM.yy HH:mm:ss':'+0100' }}</h3>
+                </div>
+                <div class="triangle"></div>
+            </ng-template>
+            <div class="message">
+                {{ message.content }}
+            </div>
+        </li>
+        <ng-template #me>
+            <li class="me">
+                <span *ngIf="chat.chat[i - 1]; else normalTriangle">
+                    <span *ngIf="chat.chat[i - 1].author !== message.author">
+                        <div class="entete">
+                            <h2>{{ message.author }}</h2>
+                            <h3>{{ message.date | date: 'dd.MM.yy HH:mm:ss':'+0100' }}</h3>
+                        </div>
+                        <div class="triangle"></div>
+                    </span>
+                </span>
+                <ng-template #normalTriangle>
+                    <div class="entete">
+                        <h2>{{ message.author }}</h2>
+                        <h3>{{ message.date | date: 'dd.MM.yy HH:mm:ss':'+0100' }}</h3>
+                    </div>
+                    <div class="triangle"></div>
+                </ng-template>
+                <div class=" message">
+                    {{ message.content }}
+                </div>
+            </li>
+        </ng-template>
+    </span>
+</ul>
+<div class="textBox">
+    <textarea [(ngModel)]="message" placeholder="Type your message" class="message-box"></textarea>
+    <a (click)="sendMessage()" class="send">Send</a>
+</div>

@@ -11,6 +11,7 @@ const User = db.User;
 module.exports = {
     getById,
     getAll,
+    getMessages,
     toggleFavorite,
     addMessage
 };
@@ -35,14 +36,37 @@ async function getById(id) {
  * @author Joel Meccariello
  */
 async function getAll(id) {
-    await Chat.find({}, (err, chats) => {
-        var resChats = [];
+    var favChats = [];
+    var otherChats = [];
 
-        for (var i = 0; i < chats.length; i++) if (chats[i].members.includes()) resChats.push(chats[i]);
+    for (var chat of await Chat.find({})) for (var member of chat.members) if (member.id === id) for (var member of chat.members) if (member.id !== id) for (var filter of chat.filter) if (filter.id === id && filter.favorite) favChats.push({ chat: chat, contact: (await User.findById(member.id)).username });
+    else otherChats.push({ chat: chat, contact: (await User.findById(member.id)).username });
 
-        return resChats;
-    });
-    return [];
+    return {
+        favChats: favChats,
+        otherChats: otherChats
+    };
+}
+
+async function getMessages(id) {
+    const chat = await Chat.findById(id);
+    var userMap = [];
+    var chatHistory = [];
+
+    if (!chat) throw "Chat not found";
+
+    for (var message of chat.chat) {
+        var foundUser = false;
+        for (var user of userMap) {
+            if (message.author === user.id) {
+                foundUser = true;
+                chatHistory.push({ author: user.username, content: message.content, date: message.date });
+            }
+        }
+        if (!foundUser) chatHistory.push({ author: (await User.findById(message.author)).username, content: message.content, date: message.date });
+    }
+
+    return chatHistory;
 }
 
 /**
@@ -62,7 +86,7 @@ async function toggleFavorite(id, userID) {
     if (!chat.members.includes(userID)) throw "User is not in the chat";
 
     if (chat.favorites.includes(userID)) {
-        for (var i = 0; i < chat.favorites.length; i++) if (chat.favorites[i] === userID) arr.splice(i, 1);
+        for (var i = 0; i < chat.favorites.length; i++) if (chat.favorites[i] === userID) chat.favorites.splice(i, 1);
     }
     else chat.favorites.push(userID);
 

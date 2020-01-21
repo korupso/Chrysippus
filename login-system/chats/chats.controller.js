@@ -7,6 +7,7 @@ const chatService = require('./chat.service');
  */
 router.get('/:id', getById);
 router.get('/:id/all', getAll);
+router.get('/:id/messages', getMessages);
 router.put('/:id', toggleFavorite);
 router.put('/:id/chat', addMessage);
 
@@ -34,7 +35,13 @@ function getById(req, res, next) {
  */
 function getAll(req, res, next) {
     chatService.getAll(req.params.id)
-        .then((chats) => res.json(chats))
+        .then(chats => res.json(chats))
+        .catch(err => next(err));
+}
+
+function getMessages(req, res, next) {
+    chatService.getMessages(req.params.id)
+        .then(messages => res.json(messages))
         .catch(err => next(err));
 }
 
@@ -54,12 +61,12 @@ function toggleFavorite(req, res, next) {
 /**
  * A user can add a message to the chat history of the chat object.
  * 
- * @param {{ params: { id: String }, body: { message: { author: String, content: String } } }} req Must contain a params object with the ID of the chat and a body object with a message object containing the message author and the message content.
+ * @param {{ params: { id: String }, body: { author: String, content: String } } }} req Must contain a params object with the ID of the chat and a body object with a message object containing the message author and the message content.
  *
  * @author Joel Meccariello
  */
 function addMessage(req, res, next) {
-    chatService.addMessage(req.params.id, req.body.message)
+    chatService.addMessage(req.params.id, req.body)
         .then(() => res.json({}))
         .catch(err => next(err));
 }

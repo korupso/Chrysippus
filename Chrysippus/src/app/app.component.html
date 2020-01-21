@@ -1,7 +1,13 @@
 <div *ngIf="hasNavbar" class="navbar">
-    <p class="title navbar-title">
-        {{ currentNavbarElement.name }}
+    <p class="title navbar-title clickable" *ngIf="clickableNavbar; else nonClickableNavbar"
+        routerLink="{{ navbarLink }}">
+        {{ navbarTitle }}
     </p>
+    <ng-template #nonClickableNavbar>
+        <p class="title navbar-title">
+            {{ navbarTitle }}
+        </p>
+    </ng-template>
     <hr class="separators">
     <ul class="navbar-list">
         <span *ngFor="let navbarElement of dynamicNavbarList">

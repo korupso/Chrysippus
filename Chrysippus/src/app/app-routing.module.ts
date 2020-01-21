@@ -24,9 +24,9 @@ const routes: Routes = [
   { path: "password-reset", component: PasswordResetComponent, canActivate: [SecurityGuard] },
   { path: "chats", component: ChatsComponent, canActivate: [SecurityGuard] },
   { path: "groups", component: GroupsComponent, canActivate: [SecurityGuard] },
-  { path: "chat", component: ChatComponent, canActivate: [SecurityGuard] },
-  { path: "group", component: GroupComponent, canActivate: [SecurityGuard] },
-  { path: "group/info", component: GroupinfoComponent, canActivate: [SecurityGuard] },
+  { path: "chat/:contact", component: ChatComponent, canActivate: [SecurityGuard] },
+  { path: "group/:name", component: GroupComponent, canActivate: [SecurityGuard] },
+  { path: "group/:name/info", component: GroupinfoComponent, canActivate: [SecurityGuard] },
 ];
 
 /**

@@ -22,10 +22,6 @@ body {
     margin: 0;
 }
 
-.chat-name {
-    margin-left: 10vw;
-}
-
 .message {
     color: rgb(197, 197, 197);
 }
@@ -93,8 +89,13 @@ input:focus.slogin {
   border-left: 0.10416vw solid rgb(57, 57, 57);
   border-top: 0.18518vh solid rgb(57, 57, 57);
   border-bottom: 0.18518vh solid rgb(57, 57, 57);
-  width: 10vw;
-  margin-left: 20vw;
+  margin: 0 auto;
+}
+
+.flex-box {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
 }
 
 .button:hover {
@@ -131,6 +132,7 @@ input:focus.slogin {
 
 .navbar-title {
     font-size: 150%;
+    text-align: center;
 }
 
 .separators {
@@ -143,5 +145,60 @@ input:focus.slogin {
 }
 
 .chat-element {
-    
+    width: 78vw;
+    height: 5vh;
+    background: rgb(70, 70, 70);
+    color: rgb(220, 220, 220);
+    border-right: 0.10416vw solid rgb(57, 57, 57);
+    border-left: 0.10416vw solid rgb(57, 57, 57);
+    border-top: 0.18518vh solid rgb(57, 57, 57);
+    border-bottom: 0.18518vh solid rgb(57, 57, 57);
+    display: flex;
+}
+
+.chat-info {
+    text-align: center;
+    margin: auto;
+}
+
+.chat-name {
+    margin-left: 2.5vw;
+}
+
+.chat-date {
+    margin-right: 2.5vw;
+}
+
+.chat-creation {
+    color: rgb(150, 150, 150);
+}
+
+.chat {
+    background: rgb(70, 70, 70);
+    color: rgb(220, 220, 220); 
+}
+
+.date {
+    margin: auto;
+    margin-right: 2.5vw;
+    color: rgb(150, 150, 150);
+}
+
+.author {
+    margin-top: -1vh;
+    font-size: 80%;
+    color: rgb(150, 150, 150);
+}
+
+.message-content {
+    margin: auto;
+    margin-left: 2.5vw;
+}
+
+.clickable {
+    cursor: pointer;
+}
+
+.owner {
+    text-decoration: underline;
 }

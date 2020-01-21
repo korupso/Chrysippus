@@ -3,6 +3,7 @@ const jwt = require('jsonwebtoken');
 const bcrypt = require('bcryptjs');
 const db = require('_helpers/db');
 const User = db.User;
+const Chat = db.Chat;
 
 /**
  * This object lists all methods to be exported from this file.
@@ -13,8 +14,19 @@ module.exports = {
     getById,
     update,
     addContact,
-    removeContact
+    removeContact,
+    getAll,
+    remove
 };
+
+async function getAll() {
+    return await User.find({});
+}
+
+async function remove(id) {
+    await User.findByIdAndRemove(id);
+    return await User.find({});
+}
 
 /**
  * This method adds a new user to the database.
@@ -90,7 +102,7 @@ async function update(id, password) {
 }
 
 /**
- * This method allows the user to add another user to his contacts.
+ * This method allows the user to add another user to his contacts and also adds the user to the other user's contact list.
  * 
  * @param { String } id         The ID of the current user, adding the contact to his contact list.
  * @param { String } contactId  The ID of the user to be added to the current user's contacts.
@@ -100,18 +112,34 @@ async function update(id, password) {
 async function addContact(id, contactId) {
     const user = await User.findById(id);
     const contact = await User.findById(contactId);
+    var chat;
 
     if (!user) throw "Something went wrong";
     if (!contact) throw "This user doesn't exist";
     for (var i = 0; i < user.contacts.length; i++) if (contactId === user.contacts[i]) throw "User is already in your contact list";
+    await Chat.find({}, chats => {
+        var chatExists = false;
+        for (var userChat in chats) if (userChat.members.includes({ id: id }) && userChat.members.includes({ id: contactId })) {
+            chatExists = true;
+            if (!userChat.filter.disabled) {
+                userChat.filter.disabled = false;
+                chat = userChat;
+            }
+            else throw "Chat already exists between you and your contact";
+        }
+        if (!chatExists) chat = new Chat({ members: [{ id: id }, { id: contactId }] });
+    });
 
     user.contacts.push(contactId);
+    contact.contacts.push(id);
 
     await user.save();
+    await contact.save();
+    await chat.save();
 }
 
 /**
- * This method allows the user to remove a contact from his contact list.
+ * This method allows the user to remove a contact from his contact list, which also removes the user from the contact's contact list.
  * 
  * @param { String } id         The ID of the user who wants to remove a contact from his contact list.
  * @param { String } contactId  The ID of the contact to be removed from the user's contact list.
@@ -121,17 +149,29 @@ async function addContact(id, contactId) {
 async function removeContact(id, contactId) {
     const user = await User.findById(id);
     const contact = await User.findById(contactId);
+    var chat;
 
     if (!user) throw "Something is wrong";
     if (!contact) throw "This user doesn't exist";
-
+    await Chat.find({}, allChats => {
+        for (var userChat in allChats) if (userChat.members.includes(id) && userChat.members.includes(contactId)) {
+            if (userChat.filter.disabled) throw "Chat is already disabled";
+            else chat = userChat;
+        }
+    });
     var isInContacts = false;
     for (var i = 0; i < user.contacts.length; i++) if (user.contacts[i]._id == contactId) isInContacts = true;
     if (!isInContacts) throw "This user is not in your contact list";
 
-    user.contacts.forEach((contact, index) => {
-        if (contact._id == contactId) user.contacts.splice(index, 1);
+    user.contacts.forEach((userContact, index) => {
+        if (userContact._id == contactId) user.contacts.splice(index, 1);
     });
+    contact.contacts.forEach((contactContact, index) => {
+        if (contactContact._id == id) contact.contacts.splice(index, 1);
+    });
+    if (!chat.filter.disabled) chat.filter.disabled = true;
 
     await user.save();
+    await contact.save();
+    await chat.save();
 }

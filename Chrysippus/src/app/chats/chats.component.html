@@ -1,6 +1,42 @@
-<span *ngFor="let chat of chats">
-    <div (click)="goToChat(chat)" class="chat-element">
-        {{ chat.contact }}
+<p *ngIf="favChats.length > 0" class="comment">
+    Favorite Chats ({{ favChats.length }})
+</p>
+<span *ngFor="let chat of favChats">
+    <div (click)="goToChat(chat)" class="chat-element clickable">
+        <p class="chat-info chat-name">
+            {{ chat.contact }}
+        </p>
+        <p class="chat-info chat-date">
+            <span *ngIf="chat.chat.chat.length > 0; else emptyChat">
+                {{ chat.chat.chat[chat.chat.chat.length - 1].date | date: 'dd.MM.yyyy':'+0100' }}
+            </span>
+            <ng-template #emptyChat>
+                <span class="chat-creation">
+                    {{ chat.chat.createdDate | date: 'dd.MM.yyyy':'+0100' }}
+                </span>
+            </ng-template>
+        </p>
+    </div>
+    <br>
+</span>
+<p *ngIf="otherChats.length > 0" class="comment">
+    Chats ({{ otherChats.length }})
+</p>
+<span *ngFor="let chat of otherChats">
+    <div (click)="goToChat(chat)" class="chat-element clickable">
+        <p class="chat-info chat-name">
+            {{ chat.contact }}
+        </p>
+        <p class="chat-info chat-date">
+            <span *ngIf="chat.chat.chat.length > 0; else emptyChat">
+                {{ chat.chat.chat[chat.chat.chat.length - 1].date | date: 'dd.MM.yyyy':'+0100' }}
+            </span>
+            <ng-template #emptyChat>
+                <span class="chat-creation">
+                    {{ chat.chat.createdDate | date: 'dd.MM.yyyy':'+0100' }}
+                </span>
+            </ng-template>
+        </p>
     </div>
     <br>
 </span>

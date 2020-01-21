@@ -18,6 +18,7 @@ import { UserService } from './services/user/user.service';
 import { TokenInterceptorService } from './services/http/token-interceptor.service';
 import { LogoutComponent } from './logout/logout.component';
 import { SecurityGuard } from './guards/security.guard';
+import { CurrentChatService } from './services/chat/current-chat.service';
 
 /**
  * This class is empty, but the decorator manages all the declarations, imports, providers and the bootstrap.
@@ -51,7 +52,8 @@ import { SecurityGuard } from './guards/security.guard';
       useClass: TokenInterceptorService,
       multi: true
     },
-    SecurityGuard
+    SecurityGuard,
+    CurrentChatService
   ],
   bootstrap: [AppComponent]
 })

@@ -1,4 +1,8 @@
 import { Component, OnInit } from '@angular/core';
+import { CurrentChatService } from '../services/chat/current-chat.service';
+import { HttpClient } from '@angular/common/http';
+import { VariablesService } from '../services/variables/variables.service';
+import { UserService } from '../services/user/user.service';
 
 @Component({
   selector: 'app-groupinfo',
@@ -7,9 +11,30 @@ import { Component, OnInit } from '@angular/core';
 })
 export class GroupinfoComponent implements OnInit {
 
-  constructor() { }
+  newUser: string;
+  chat: any;
+  id: string;
+  username: string;
+
+  constructor(private chatService: CurrentChatService, private http: HttpClient, private variables: VariablesService, private user: UserService) { }
 
   ngOnInit() {
+    this.id = this.user.id;
+    this.username = this.user.username;
+    this.http.get(this.variables.urlBackend + "/groups/" + this.chatService.currentChat.id).subscribe(
+      res => {
+        console.log(res);
+        this.chat = res as any;
+      }
+    );
+  }
+
+  addUser() {
+    this.http.put(this.variables.urlBackend + "/groups/" + this.chat.id + "/members", { username: this.newUser });
+  }
+
+  removeUser(id: string) {
+    this.http.put(this.variables.urlBackend + "/groups/" + this.chat.id + "/members/remove", { id: id });
   }
 
 }

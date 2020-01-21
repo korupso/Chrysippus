@@ -12,8 +12,8 @@ const Schema = mongoose.Schema;
 const schema = new Schema({
     members: { type: [{ id: String }], unique: true, required: true },
     createdDate: { type: Date, default: Date.now },
-    chat: { type: [{ author: String, content: String, date: Date }], required: true },
-    favorites: { type: [{ id: String }], required: true, default: false }
+    chat: { type: [{ author: String, content: String, date: Date }], default: [] },
+    filter: { type: [{ id: String, favorite: Boolean, disabled: Boolean }], default: [] }
 });
 
 schema.set('toJSON', { virtuals: true });

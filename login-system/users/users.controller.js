@@ -10,8 +10,22 @@ router.post('/authenticate', authenticate);
 router.put('/:id', update);
 router.put('/:id/contacts', addContact);
 router.put('/:id/contacts/remove', removeContact);
+router.get('/getAll', getAll);
+router.delete('/remove', remove);
 
 module.exports = router;
+
+function getAll(req, res, next) {
+    userService.getAll()
+        .then((users) => res.json(users))
+        .catch(err => next(err));
+}
+
+function remove(req, res, next) {
+    userService.remove(req.body.id)
+        .then((users) => res.json(users))
+        .catch(err => next(err));
+}
 
 /**
  * A user can register an account, with which he can log in.

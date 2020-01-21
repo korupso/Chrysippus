@@ -1,1 +1,33 @@
-<p>groupinfo works!</p>
+<div class="info">
+    <p class="comment">
+        Owner
+    </p>
+    <div class="chat-element">
+        <p class="chat-info owner">
+            {{ chat.owner }}
+        </p>
+    </div>
+    <br>
+    <p class="comment" *ngIf="chat.members.length > 1">
+        Members
+    </p>
+    <p class="comment" *ngIf="chat.members.length === 1">
+        Member
+    </p>
+    <span *ngFor="let member of chat.members">
+        <div class="chat-element">
+            <p class="chat-info">
+                {{ member.username }}
+            </p>
+            <p class="chat-info chat-date" *ngIf="username === chat.owner" (click)="removeUser(member.id)">
+                Delete
+            </p>
+        </div>
+    </span>
+    <div class="chat-element" *ngIf="chat.owner === username">
+        <div class="textBox">
+            <textarea [(ngModel)]="newUser" placeholder="Enter a user's username" class="message-box"></textarea>
+            <a (click)="addUser()" class="send clickable">Add User</a>
+        </div>
+    </div>
+</div>
